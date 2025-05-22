@@ -1,0 +1,4 @@
+fastapi==0.115.12
+together==1.5.8
+pydantic
+python-dotenv
