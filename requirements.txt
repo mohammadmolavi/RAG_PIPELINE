@@ -5,3 +5,4 @@ python-dotenv
 qdrant-client
 python-docx
 tiktoken
+sentence_transformers
