@@ -4,3 +4,4 @@ pydantic
 python-dotenv
 qdrant-client
 python-docx
+tiktoken
