@@ -138,4 +138,5 @@ for i in dataset:
     dataset_new.append(i[0])
 
 model =SentenceTransformer( 'sentence-transformers/all-MiniLM-L6-v2')
+model.save('./models/all-MiniLM-L6-v2')
 upload_chunks_to_qdrant(dataset_new,embed_model=model)
