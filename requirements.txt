@@ -7,4 +7,5 @@ python-docx
 tiktoken
 sentence_transformers
 llama-index
+llama-index-vector-stores-qdrantp
 langchain
