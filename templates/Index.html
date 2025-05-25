@@ -33,23 +33,34 @@
       const retrieveRes = await fetch("/retrieve", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: question })
-      });
-      const retrieveData = await retrieveRes.json();
-      const chunksDiv = document.getElementById("chunks");
-      chunksDiv.innerHTML = "";
-      retrieveData.documents.forEach(doc => {
-        const div = document.createElement("div");
-        div.className = "chunk";
-        div.innerHTML = `<b>Similarity:</b> ${doc.similarity}<br>${doc.content}`;
-        chunksDiv.appendChild(div);
+        body: JSON.stringify({ question: question })
       });
 
+      const retrieveData = await retrieveRes.json();
+      const chunksDiv = document.getElementById("chunks");
+    chunksDiv.innerHTML = "";
+  retrieveData.documents.forEach(doc => {
+    const payload = doc.payload;
+    const score = doc.score;
+    const div = document.createElement("div");
+    div.className = "chunk";
+    div.innerHTML = `
+      <b>Heading 1:</b> ${payload["heading 1"]}<br>
+      <b>Heading 2:</b> ${payload["heading 2"]}<br>
+      <b>Score:</b> ${score.toFixed(3)}<br>
+      <b>Text:</b> ${payload.text}
+    `;
+    chunksDiv.appendChild(div);
+  });
+      const firstDoc = retrieveData.documents[0];
+      const firstText = firstDoc?.payload?.text || "";
       // Generate answer
       const generateRes = await fetch("/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: question })
+        body: JSON.stringify({
+             question: question,
+             answer: firstText })
       });
       const generateData = await generateRes.json();
       document.getElementById("answer").innerText = generateData.answer;
