@@ -54,7 +54,7 @@ def generate_answer(request: QuestionRequest,):
         if not generated_doc:
             raise HTTPException(status_code=404, detail="No relevant documents generated.")
         print("answer :     ",generated_doc)
-        return {"question": request, "answer": answer}
+        return {"question": request, "answer": generated_doc}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
