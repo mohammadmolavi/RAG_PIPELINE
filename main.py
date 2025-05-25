@@ -1,12 +1,24 @@
 from retrieval import retrieve
 from generation import generate
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException,Request
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
-app = FastAPI()
 class QuestionRequest(BaseModel):
     question: str
     answer: str = None
+
+app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/", response_class=HTMLResponse)
+async def serve_frontend(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/ask")
 def ask_question(request: QuestionRequest):
