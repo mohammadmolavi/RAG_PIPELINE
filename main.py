@@ -22,19 +22,36 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
 
-app.exception_handler(StarletteHTTPException)
-async def http_exception_handler(request: Request, exc: StarletteHTTPException):
-    return JSONResponse(
-        status_code=exc.status_code,
-        content={"error": True, "message": exc.detail},
-    )
 
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    return JSONResponse(
-        status_code=422,
-        content={"error": True, "message": "Validation Error"},
-    )
+#general error handling
+@app.exception_handler(Exception)
+async def general_exception_handler(request: Request, exc: Exception):
+    return templates.TemplateResponse("error.html", {
+        "request": request,
+        "status_code": 500,
+        "detail": "Internal Server Error"
+    }, status_code=500)
+
+# error handling : not found page
+@app.exception_handler(StarletteHTTPException)
+async def custom_starlette_exception_handler(request: Request, exc: StarletteHTTPException):
+    if exc.status_code == 404:
+        return templates.TemplateResponse("error.html", {
+            "request": request,
+            "status_code": 404,
+            "detail":"page not found"
+        }, status_code=404)
+    return await custom_http_exception_handler(request, exc)
+
+@app.exception_handler(HTTPException)
+async def custom_http_exception_handler(request: Request, exc: HTTPException):
+    return templates.TemplateResponse("error.html", {
+        "request": request,
+        "status_code": exc.status_code,
+        "detail": exc.detail
+    }, status_code=exc.status_code)
+
+
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_frontend(request: Request):
