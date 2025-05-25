@@ -6,6 +6,7 @@ from pydantic import BaseModel
 app = FastAPI()
 class QuestionRequest(BaseModel):
     question: str
+    answer: str = None
 
 @app.post("/ask")
 def ask_question(request: QuestionRequest):
@@ -33,10 +34,11 @@ def retrieve_question(request: QuestionRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/generate")
-def generate_answer(request: QuestionRequest):
+def generate_answer(request: QuestionRequest,):
     try:
-        answer = request.question
-        generated_doc = generate(request)
+        answer = request.answer
+        question= request.question
+        generated_doc = generate(question,answer)
         if not generated_doc:
             raise HTTPException(status_code=404, detail="No relevant documents generated.")
         
