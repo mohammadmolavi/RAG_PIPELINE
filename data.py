@@ -67,7 +67,7 @@ def preprocess_data(raw_text):
     paragraphs = split_paragraphs(text)
     return paragraphs
 
-def tokenize_chunk(text, metadata, tokenizer_name="gpt2", chunk_size=300, overlap=0.15):
+def tokenize_chunk(text, metadata, tokenizer_name="gpt2", chunk_size=100, overlap=0.1):
     enc = tiktoken.get_encoding(tokenizer_name)
     tokens = enc.encode(text[0])
 
@@ -126,6 +126,7 @@ def upload_chunks_to_qdrant(
 file_path="data\dataset.docx"
 
 sections = extract_data(file_path)
+
 for sec in sections:
     sec['text']=preprocess_data(sec['text'])
 
@@ -133,10 +134,12 @@ dataset=[]
 for section in sections:
     dataset.append(tokenize_chunk(section['text'],section['metadata']))
 
-dataset_new=[]
-for i in dataset:
-    dataset_new.append(i[0])
 
-model =SentenceTransformer( 'sentence-transformers/all-MiniLM-L6-v2')
-model.save('./models/all-MiniLM-L6-v2')
+
+dataset_new=[item for sublist in dataset for item in sublist]
+
+# model =SentenceTransformer( 'sentence-transformers/all-MiniLM-L6-v2')
+# model.save('./models/all-MiniLM-L6-v2')
+model =SentenceTransformer( './models/all-MiniLM-L6-v2')
+
 upload_chunks_to_qdrant(dataset_new,embed_model=model)
