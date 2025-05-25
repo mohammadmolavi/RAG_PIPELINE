@@ -1,0 +1,34 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #fafafa;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #0077cc;
+}
+
+textarea {
+  width: 100%;
+  height: 120px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+button {
+  padding: 0.6rem 1.2rem;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  t
