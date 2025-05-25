@@ -30,5 +30,12 @@ def retrieve(query):
         collection_name=collectionName,
         query_vector=query_vector,
         limit=3
+        
     )
-    return [hit.payload for hit in search_result]
+    results = []
+    for hit in search_result:
+        results.append({
+            "payload": hit.payload,
+            "score": hit.score  
+        })
+    return results
