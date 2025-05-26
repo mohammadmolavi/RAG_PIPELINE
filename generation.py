@@ -29,7 +29,7 @@ def generate(question, context):
         messages=[
             {"role": "user", "content": prompt}
         ],
-        temperature=0.2,
+        temperature=0.3,
         max_tokens=150
         )
     return response.choices[0].message.content

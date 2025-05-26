@@ -29,7 +29,7 @@ def retrieve(query):
     search_result=client.search(
         collection_name=collectionName,
         query_vector=query_vector,
-        limit=3
+        limit=5
         
     )
     results = []
