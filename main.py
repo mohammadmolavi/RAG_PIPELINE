@@ -1,6 +1,6 @@
 from retrieval import retrieve
 from generation import generate
-from fastapi import FastAPI, HTTPException,Request,Form
+from fastapi import FastAPI, HTTPException,Request
 from typing import Optional
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
@@ -16,6 +16,12 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 class QuestionRequest(BaseModel):
     question: str
     answer: str = None
+
+
+class RetrieveRequest(BaseModel):
+    query: str
+    heading1: Optional[str] = None
+    heading2: Optional[str] = None
 
 app = FastAPI()
 
@@ -71,10 +77,14 @@ def ask_question(request: QuestionRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+
 @app.post("/retrieve")
-def retrieve_question(request: QuestionRequest=Form(...),heading1: Optional[str] = Form(None), heading2: Optional[str] = Form(None)):
+def retrieve_question(data:RetrieveRequest ):
     try:
-        question = request.question
+        question = data.query
+        heading1 = data.heading1
+        heading2 = data.heading2
         retrieve_doc = retrieve(question,heading1,heading2)
         if not retrieve_doc:
             raise HTTPException(status_code=404, detail="No relevant documents found.")

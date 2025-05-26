@@ -44,10 +44,7 @@ def retrieve(
         collection_name=collectionName,
         query_vector=query_vector,
         query_filter=query_filter,
-        limit=3,
-        similarity_threshold=similarity_threshold
-        
-        
+        limit=3
     )
     results = []
     for hit in search_result:
