@@ -32,3 +32,17 @@ button {
   font-size: 1rem;
   cursor: pointer;
  } 
+button:hover {
+  background-color: #0056b3;
+}
+
+#result {
+  margin-top: 2rem;
+  white-space: pre-wrap;
+}
+.chunk {
+  background-color: #f1f1f1;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}

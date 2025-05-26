@@ -12,7 +12,32 @@
 </head>
 <body>
   <h1>RAG-based QA</h1>
+  <h2>Select Headings</h2>
+    
+    <label for="heading1">Heading 1:</label>
+    <select id="heading1">
+      <option value="">-- Select Heading 1 --</option>
+      <option value="People of France">People of France</option>
+      <option value="Settlement patterns">Settlement patterns</option>
+      <option value="Demographic trends">Demographic trends</option>
+    </select>
 
+    <label for="heading2">Heading 2:</label>
+    <select id="heading2">
+      <option value="">-- Select Heading 2 --</option>
+      <option value="Ethnic groups">Ethnic groups</option>
+      <option value="Languages">Languages</option>
+      <option value="Religion of France">Religion of France</option>
+      <option value=" Rural landscape and settlement "> Rural landscape and settlement </option>
+      <option value="Bocage">Bocage</option>
+      <option value="Open-field">Open-field</option>
+      <option value="Mediterranean">Mediterranean</option>
+      <option value="Mountain">Mountain</option>
+      <option value="Postwar transformation">Postwar transformation</option>
+      <option value="Urban settlement">Urban settlement</option>
+      <option value="Population history">Population history</option>
+      <option value="Emigration">Emigration</option>
+    </select>
   <textarea id="question" placeholder="Ask a question..."></textarea>
   <br>
   <button onclick="ask()">Ask</button>
@@ -22,72 +47,6 @@
 
   <h2>Generated Answer:</h2>
   <div id="answer" style="white-space: pre-wrap; background:#e9ffe9; padding: 1rem; border-radius: 6px;"></div>
-
-  <script>
-    async function ask() {
-      const question = document.getElementById("question").value;
-    
-      // Retrieve chunks
-      const retrieveRes = await fetch("/retrieve", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: question })
-      });
-
-      function isValidQuestion(question) {
-      question = question.trim();
-
-      if (question.length < 8) return false;
-
-      const questionWords = [
-    "what", "why", "how", "when", "where", "who", "is", "are", "do", "does", "can", "should", "could"
-      ];
-
-    const startsWithQuestionWord = questionWords.some(word =>
-    question.toLowerCase().startsWith(word)
-    );
-    const endsWithQuestionMark = /[؟?]\s*$/.test(question);
-    const hasLetters = /[a-zA-Z]/.test(question);
-
-  return (startsWithQuestionWord || endsWithQuestionMark) && hasLetters;
-}
-
-    if (!isValidQuestion(question)) {
-        alert("Please enter a valid question.");
-        return;
-      }
-    else{
-      document.getElementById("chunks").innerHTML = "Loading...";
-      document.getElementById("answer").innerText = "";
-      const retrieveData = await retrieveRes.json();
-      const chunksDiv = document.getElementById("chunks");
-      chunksDiv.innerHTML = "";
-      retrieveData.documents.forEach(doc => {
-      const payload = doc.payload;
-      const score = doc.score;
-      const div = document.createElement("div");
-      div.className = "chunk";
-      div.innerHTML = `
-        <b>Heading 1:</b> ${payload["heading 1"]}<br>
-        <b>Heading 2:</b> ${payload["heading 2"]}<br>
-        <b>Score:</b> ${score.toFixed(3)}<br>
-        <b>Text:</b> ${payload.text}
-      `;
-      chunksDiv.appendChild(div);
-    });
-        const firstDoc = retrieveData.documents[0];
-        const firstText = firstDoc?.payload?.text || "";
-        // Generate answer
-        const generateRes = await fetch("/generate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-              question: question,
-              answer: firstText })
-        });
-        const generateData = await generateRes.json();
-        document.getElementById("answer").innerText = generateData.answer;
-      }}
-  </script>
+  <script src="/static/script.js"></script>
 </body>
 </html>
