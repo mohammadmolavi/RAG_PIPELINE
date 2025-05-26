@@ -3,3 +3,4 @@
 .env.local
 models/
 __pycache__/
+.venv/

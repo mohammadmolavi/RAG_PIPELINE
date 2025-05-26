@@ -60,6 +60,8 @@ async def custom_http_exception_handler(request: Request, exc: HTTPException):
 
 
 
+
+
 @app.get("/", response_class=HTMLResponse)
 async def serve_frontend(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
@@ -88,7 +90,7 @@ def retrieve_question(data:RetrieveRequest ):
         retrieve_doc = retrieve(question,heading1,heading2)
         if not retrieve_doc:
             raise HTTPException(status_code=404, detail="No relevant documents found.")
-        print(retrieve_doc)
+        # print(retrieve_doc)
         return {"question": question, "documents": retrieve_doc}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
