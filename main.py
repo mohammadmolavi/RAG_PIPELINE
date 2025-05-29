@@ -20,8 +20,8 @@ class QuestionRequest(BaseModel):
 
 class RetrieveRequest(BaseModel):
     query: str
-    heading1: Optional[str] = None
-    heading2: Optional[str] = None
+    heading_1: Optional[str] = None
+    heading_2: Optional[str] = None
 
 app = FastAPI()
 
@@ -85,9 +85,9 @@ def ask_question(request: QuestionRequest):
 def retrieve_question(data:RetrieveRequest ):
     try:
         question = data.query
-        heading1 = data.heading1
-        heading2 = data.heading2
-        retrieve_doc = retrieve(question,heading1,heading2)
+        heading_1 = data.heading_1
+        heading_2 = data.heading_2
+        retrieve_doc = retrieve(question,heading_1,heading_2)
         if not retrieve_doc:
             raise HTTPException(status_code=404, detail="No relevant documents found.")
         # print(retrieve_doc)

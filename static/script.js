@@ -132,12 +132,12 @@
 
    async function ask() {
       const question = document.getElementById("question").value;
-      const heading1 = document.getElementById("heading1").value;
-      const heading2 = document.getElementById("heading2").value;
+      const heading_1 = document.getElementById("heading_1").value;
+      const heading_2 = document.getElementById("heading_2").value;
       const json_payload = {
     query: question,
-    heading1: heading1 || null,
-    heading2: heading2 || null
+    heading_1: heading_1 || null,
+    heading_2: heading_2 || null
   };
 
 
@@ -150,7 +150,7 @@
 
     document.getElementById("chunks").innerHTML = "Loading...";
     document.getElementById("answer").innerText = "";
-  const retrieveRes = await fetch("/retrieve", {
+    const retrieveRes = await fetch("/retrieve", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -169,8 +169,8 @@
       const div = document.createElement("div");
       div.className = "chunk";
       div.innerHTML = `
-        <b>Heading 1:</b> ${payload["heading 1"]}<br>
-        <b>Heading 2:</b> ${payload["heading 2"]}<br>
+        <b>Heading_1:</b> ${payload["heading_1"]}<br>
+        <b>Heading_2:</b> ${payload["heading_2"]}<br>
         <b>Score:</b> ${score.toFixed(3)}<br>
         <b>Text:</b> ${payload.text}
       `;
