@@ -27,13 +27,13 @@ def extract_data(doc_path):
             if para.text.strip():
                 if len(current_headings)>1:
                     metadata = {
-                        "heading 1":  current_headings[0],
-                        "heading 2": current_headings[1]
+                        "heading_1":  current_headings[0],
+                        "heading_2": current_headings[1]
                     }
                 else:
                     metadata = {
-                        "heading 1":  current_headings[0],
-                        "heading 2": None
+                        "heading_1":  current_headings[0],
+                        "heading_2": None
                     }
                 results.append({
                     "text": para.text.strip(),
