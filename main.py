@@ -13,9 +13,11 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 
 
-class QuestionRequest(BaseModel):
+class GenerativeRequest(BaseModel):
     question: str
-    answer: str = None
+    chunk_1: str
+    chunk_2: Optional[str] = None
+    chunk_3:Optional[str]=None
 
 
 class RetrieveRequest(BaseModel):
@@ -67,14 +69,16 @@ async def serve_frontend(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/ask")
-def ask_question(request: QuestionRequest):
+def ask_question(request: RetrieveRequest):
     try:
-        question = request.question
-        retrieve_doc = retrieve(question)
+        question = request.query
+        heading_1 = request.heading_1      
+        heading_2=request.heading_2
+        retrieve_doc = retrieve(question,heading_1, heading_2)
         if not retrieve_doc:
             raise HTTPException(status_code=404, detail="No relevant documents found.")
         
-        answer = generate(question, retrieve_doc[0]['text'])
+        answer = generate(question, retrieve_doc[0]['text'],retrieve_doc[1]['text'],retrieve_doc[2]['text'])   
         return {"question": question, "answer": answer}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -96,11 +100,11 @@ def retrieve_question(data:RetrieveRequest ):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/generate")
-def generate_answer(request: QuestionRequest,):
+def generate_answer(request: GenerativeRequest):
     try:
-        answer = request.answer
+        
         question= request.question
-        generated_doc = generate(question,answer)
+        generated_doc = generate(question,request.chunk_1,request.chunk_2,request.chunk_3)
         if not generated_doc:
             raise HTTPException(status_code=404, detail="No relevant documents generated.")
         print("answer :     ",generated_doc)
