@@ -7,6 +7,9 @@ import os
 from qdrant_client.http.models import MatchValue ,Filter,FieldCondition
 from numpy.linalg import norm
 import numpy as np
+import re
+import unicodedata
+
 
 embed_model = SentenceTransformer("./models/all-MiniLM-L6-v2")
 load_dotenv(dotenv_path=".env.local")
@@ -25,13 +28,31 @@ index = VectorStoreIndex.from_vector_store(
     show_progress=True
 )
 
-def normalize(vector):
-    """Normalize the vector for cosine similarity"""
-    vector = np.array(vector)
-    if norm(vector) == 0:
-        return vector.tolist()
-    return (vector / norm(vector)).tolist()
-def embed(text:str)->list[float]:
+
+def normalize_text(text):
+    text = re.sub(r'\s+', ' ', text)
+    text = unicodedata.normalize("NFKC", text)
+    text = ''.join(c for c in text if c.isprintable())
+    return text.strip()
+
+def clean_punctuation(text):
+    text = re.sub(r'[“”«»]', '"', text)
+    text = re.sub(r"[’‘]", "'", text)
+    text = re.sub(r"[–—]", "-", text)
+    return text
+
+def remove_noise(text):
+    text = re.sub(r"http\S+|www\S+|https\S+", '', text)
+    text = re.sub(r'\S+@\S+', '', text)
+    text = re.sub(r'\d{5,}', '', text)
+    return text
+
+
+
+def embed(raw_text:str)->list[float]:
+    text = normalize_text(raw_text)
+    text = clean_punctuation(text)
+    text=remove_noise(text)
     return embed_model.encode(text).tolist()
 
 def retrieve(
@@ -39,7 +60,7 @@ def retrieve(
         heading_1=None,
         heading_2=None,
         similarity_threshold: float=0.3):
-    query_vector=normalize(embed(query))
+    query_vector=embed(query)
 
     must_conditions = []
     if heading_1:

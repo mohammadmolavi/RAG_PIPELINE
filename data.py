@@ -64,10 +64,11 @@ def split_paragraphs(text):
 def preprocess_data(raw_text):
     text = normalize_text(raw_text)
     text = clean_punctuation(text)
+    text=remove_noise(text)
     paragraphs = split_paragraphs(text)
     return paragraphs
 
-def tokenize_chunk(text, metadata, tokenizer_name="gpt2", chunk_size=150, overlap=0.2):
+def tokenize_chunk(text, metadata, tokenizer_name="gpt2", chunk_size=200, overlap=0.2):
     enc = tiktoken.get_encoding(tokenizer_name)
     tokens = enc.encode(text[0])
 
