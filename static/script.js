@@ -176,15 +176,23 @@
       `;
       chunksDiv.appendChild(div);
     });
-        const firstDoc = retrieveData.documents[0];
-        const firstText = firstDoc?.payload?.text || "";
+        const chunk_1 = retrieveData.documents[0];
+        const chunk_2 = retrieveData.documents[1] || "";
+        const chunk_3 = retrieveData.documents[2] || "";
+
+
+        const chunk_1_text = chunk_1?.payload?.text || "";
+        const chunk_2_text = chunk_2?.payload?.text || "";
+        const chunk_3_text = chunk_3?.payload?.text || "";
         // Generate answer
         const generateRes = await fetch("/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
               question: question,
-              answer: firstText })
+              chunk_1: chunk_1_text,
+              chunk_2: chunk_2_text,
+              chunk_3:chunk_3_text,})
         });
         const generateData = await generateRes.json();
         document.getElementById("answer").innerText = generateData.answer;
