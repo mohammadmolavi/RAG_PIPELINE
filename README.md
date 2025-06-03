@@ -18,27 +18,27 @@ This project combines cosin similarity search with generative models by:
 
 ## 📁 Project Structure
 
-RAG_pipeline/
-│
-├── data/ # Raw document and test case
-├── models/ # Local models or downloaded Hugging Face models
-├── src/
-│ ├── data.py # Text splitting logic _ Storing vectors
-│ ├── generator.py # generate answer 
-│ ├── model_downloader.py # downloading models and saving them in local storage
-│ ├── retriever.py # retrieval logic
-│
-├── static/
-│ ├── script.js 
-│ ├── style.css 
-│
-├── templates/
-│ ├── error.html  
-│ ├── Index.html 
-│
-├── main.py # Main entry point to run the pipeline
-├── README.md
-└── requirements.txt
+RAG_pipeline/  
+│  
+├── data/ # Raw document and test case  
+├── models/ # Local models or downloaded Hugging Face models  
+├── src/  
+│ ├── data.py # Text splitting logic _ Storing vectors  
+│ ├── generator.py # generate answer  
+│ ├── model_downloader.py # downloading models and saving them in local storage  
+│ ├── retriever.py # retrieval logic  
+│  
+├── static/  
+│ ├── script.js  
+│ ├── style.css  
+│  
+├── templates/  
+│ ├── error.html   
+│ ├── Index.html  
+│  
+├── main.py # Main entry point to run the pipeline  
+├── README.md  
+└── requirements.txt  
 
 ---
 
