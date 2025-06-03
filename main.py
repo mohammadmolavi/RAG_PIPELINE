@@ -1,5 +1,5 @@
-from retrieval import retrieve
-from generation import generate
+from src.retrieval import retrieve
+from src.generation import generate
 from fastapi import FastAPI, HTTPException,Request
 from typing import Optional
 from fastapi.responses import HTMLResponse
