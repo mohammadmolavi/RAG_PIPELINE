@@ -6,8 +6,6 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import JSONResponse
-from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 
@@ -92,10 +90,8 @@ def retrieve_question(data:RetrieveRequest ):
         heading_1 = data.heading_1
         heading_2 = data.heading_2
         retrieve_doc = retrieve(question,heading_1,heading_2)
-        print(retrieve_doc)
         if  len(retrieve_doc)==0 :
             return {"question": question, "documents": []}
-        # print(retrieve_doc)
         return {"question": question, "documents": retrieve_doc}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -112,13 +108,4 @@ def generate_answer(request: GenerativeRequest):
         return {"question": request, "answer": generated_doc}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-
-# question ="What is the population of France ?"
-# retrieve_doc=retrieve(question)
-# # print(retrieve_doc[0]['text'])
-
-# answer = generate(question, retrieve_doc[0]['text'])
-# print(f"Question: {question}")
-# print(f"Answer: {answer}")
 

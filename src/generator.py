@@ -2,7 +2,6 @@ from together import Together
 from dotenv import load_dotenv
 import os 
 def build_prompt(query: str, chunk_1: str,chunk_2: str,chunk_3: str) -> str:
-    # context_block = "\n".join(f"- {text}" for text in retrieved_texts)
     prompt = f"""You are a helpful assistant. Based on the information provided belowAnswer the question **only** based on the following retrieved information, please answer the user's question accurately and thoroughly.
     If the answer is not in the context, please say 'I don’t know. Do not use any external knowledge or assumptions.
 
@@ -21,7 +20,6 @@ f"[3]\n{chunk_3}\n\n"
 load_dotenv(dotenv_path=".env.local")
 load_dotenv()
 
-# print(os.getenv("TOGETHER_API_KEY"))
 client = Together(api_key=os.getenv("TOGETHER_API_KEY"))
 
 def generate(question, chunk_1, chunk_2, chunk_3):

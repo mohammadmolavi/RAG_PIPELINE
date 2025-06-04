@@ -2,11 +2,9 @@ from llama_index.core import VectorStoreIndex
 from llama_index.vector_stores.qdrant import  QdrantVectorStore
 from qdrant_client import QdrantClient
 from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer ,  util
+from sentence_transformers import SentenceTransformer 
 import os
 from qdrant_client.http.models import MatchValue ,Filter,FieldCondition
-from numpy.linalg import norm
-import numpy as np
 import re
 import unicodedata
 
