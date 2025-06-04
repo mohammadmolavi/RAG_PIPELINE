@@ -193,12 +193,12 @@ pip install -r requiremets.txt
 
 | Parameter             | Type     | Default Value                             | Description                                                           |
 |-----------------------|----------|-------------------------------------------|-----------------------------------------------------------------------|
-| `chunk_size`          | int      | `200`                                     | Number of tokens per chunk when splitting documents.                 |
+| `chunk_size`          | int      | `100`                                     | Number of tokens per chunk when splitting documents.                 |
 | `chunk_overlap`       | float      | `0.2`                                      | Overlap (in tokens) between chunks to maintain context.              |
 | `embedding_model`     | string   | `sentence-transformers/all-MiniLM-L6-v2` | Model used for generating embeddings.                              |
 | `embedding_dim`       | int      | `384`                                     | Dimension of the embedding vectors.                                  |
 | `retrieval_top_k`     | int      | `3`                                       | Number of top chunks retrieved for a query.                          |
-| `similarity_threshold`| float    | `0.3`                                     | Minimum cosine similarity for a chunk to be considered relevant.     |
+| `similarity_threshold`| float    | `0.5`                                     | Minimum cosine similarity for a chunk to be considered relevant.     |
 | `llm_model`           | string   | `meta-llama/Llama-3.3-70B-Instruct-Turbo`       | Generative model used for final answer generation.                   |
 | `use_qdrant`          | bool     | `True`              | Whether to use Qdrant instead of FAISS for vector search.            |
 | `qdrant_host`         | string   | `localhost`                               | Host address of Qdrant server.                                       |
