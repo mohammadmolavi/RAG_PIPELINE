@@ -31,6 +31,5 @@ def generate(question, chunk_1, chunk_2, chunk_3):
         messages=[
             {"role": "user", "content": prompt}
         ],
-        temperature=0.1,
-        max_tokens=150)
+        temperature=0.1)
     return response.choices[0].message.content

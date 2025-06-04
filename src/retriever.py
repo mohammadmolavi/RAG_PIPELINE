@@ -59,7 +59,7 @@ def retrieve(
         query,
         heading_1=None,
         heading_2=None,
-        similarity_threshold: float=0.3):
+        similarity_threshold: float=0.5):
     query_vector=embed(query)
 
     must_conditions = []

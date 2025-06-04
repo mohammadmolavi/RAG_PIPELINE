@@ -159,9 +159,11 @@
   })
  
     const retrieveData = await retrieveRes.json();
-
-    //   const retrieveData = submitQuery();
-      const chunksDiv = document.getElementById("chunks");
+    if(!retrieveData.documents || retrieveData.documents.length === 0) {
+      document.getElementById("chunks").innerHTML = "No relevant chunks found.";
+      return;
+    }                                  
+    else{const chunksDiv = document.getElementById("chunks");
       chunksDiv.innerHTML = "";
       retrieveData.documents.forEach(doc => {
       const payload = doc.payload;
@@ -195,5 +197,8 @@
               chunk_3:chunk_3_text,})
         });
         const generateData = await generateRes.json();
-        document.getElementById("answer").innerText = generateData.answer;
+        document.getElementById("answer").innerText = generateData.answer;}
+
+    //   const retrieveData = submitQuery();
+      
       }}

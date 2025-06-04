@@ -68,7 +68,7 @@ def preprocess_data(raw_text):
     paragraphs = split_paragraphs(text)
     return paragraphs
 
-def tokenize_chunk(text, metadata, tokenizer_name="gpt2", chunk_size=200, overlap=0.2):
+def tokenize_chunk(text, metadata, tokenizer_name="gpt2", chunk_size=100, overlap=0.2):
     enc = tiktoken.get_encoding(tokenizer_name)
     tokens = enc.encode(text[0])
 
