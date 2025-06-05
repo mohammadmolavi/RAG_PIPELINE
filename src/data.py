@@ -93,7 +93,7 @@ def tokenize_chunk(text, metadata, tokenizer_name="gpt2", chunk_size=100, overla
 
 def upload_chunks_to_qdrant(
     dataset,  
-    collection_name="French_population_structure",
+    collection_name="land_of_france",
     qdrant_url="http://localhost",
     qdrant_port=8080,
     embed_model=None
@@ -124,7 +124,7 @@ def upload_chunks_to_qdrant(
 
 
 
-file_path="data\dataset.docx"
+file_path="data\land_of_france.docx"
 
 sections = extract_data(file_path)
 
